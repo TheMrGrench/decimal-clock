@@ -41,31 +41,41 @@
                 android:layout_marginBottom="24dp"
                 android:layout_gravity="center" />
 
-            <!-- Цветовая тема -->
+            <!-- Цветовая палитра -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Цветовая тема"
+                android:text="Цветовая палитра"
                 android:textSize="16sp"
                 android:textColor="@color/white_90"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Слайдер выбора темы -->
+            <!-- Превью цвета -->
+            <View
+                android:id="@+id/colorPreview"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/color_preview_background"
+                android:elevation="4dp" />
+
+            <!-- Слайдер выбора цвета (Hue: 0-360) -->
             <SeekBar
-                android:id="@+id/themeSeekBar"
+                android:id="@+id/colorHueSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="5"
-                android:progress="0"
+                android:max="360"
+                android:progress="270"
                 android:progressTint="@color/white"
                 android:thumbTint="@color/white"
                 android:layout_marginBottom="8dp" />
 
             <TextView
-                android:id="@+id/themeNameText"
+                android:id="@+id/colorHueText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Тема 1: Фиолетовый"
+                android:text="Оттенок: 270°"
                 android:textSize="14sp"
                 android:textColor="@color/white_70"
                 android:layout_marginBottom="24dp"

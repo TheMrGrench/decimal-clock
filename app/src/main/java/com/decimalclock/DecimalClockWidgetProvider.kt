@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.*
+import android.graphics.drawable.GradientDrawable
 import android.os.Handler
 import android.os.Looper
 import android.widget.RemoteViews
@@ -77,6 +79,14 @@ class DecimalClockWidgetProvider : AppWidgetProvider() {
     ) {
         val views = RemoteViews(context.packageName, R.layout.widget_decimal_clock)
 
+        // Load color hue from SharedPreferences
+        val prefs = context.getSharedPreferences("DecimalClockPrefs", Context.MODE_PRIVATE)
+        val colorHue = prefs.getFloat("colorHue", 270f)
+
+        // Generate gradient bitmap
+        val gradientBitmap = createGradientBitmap(colorHue, 400, 200)
+        views.setImageViewBitmap(R.id.widgetBackground, gradientBitmap)
+
         // Calculate decimal time
         val now = Calendar.getInstance()
         val h = now.get(Calendar.HOUR_OF_DAY)
@@ -107,5 +117,27 @@ class DecimalClockWidgetProvider : AppWidgetProvider() {
         views.setOnClickPendingIntent(R.id.widgetDecimalTime, pendingIntent)
 
         appWidgetManager.updateAppWidget(appWidgetId, views)
+    }
+
+    private fun createGradientBitmap(hue: Float, width: Int, height: Int): Bitmap {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+
+        val colors = SettingsActivity.generateGradientColors(hue)
+        val gradient = LinearGradient(
+            0f, 0f, width.toFloat(), height.toFloat(),
+            colors.first, colors.second,
+            Shader.TileMode.CLAMP
+        )
+
+        val paint = Paint().apply {
+            shader = gradient
+        }
+
+        val rect = RectF(0f, 0f, width.toFloat(), height.toFloat())
+        val cornerRadius = 24f * (width / 400f) // Scale corner radius
+        canvas.drawRoundRect(rect, cornerRadius, cornerRadius, paint)
+
+        return bitmap
     }
 }

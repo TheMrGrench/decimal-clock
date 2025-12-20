@@ -28,6 +28,9 @@ class DecimalClockView @JvmOverloads constructor(
     private var centerY = 0f
     private var radius = 0f
 
+    // Color hue for dynamic theming
+    private var currentHue = 270f
+
     // Previous values for step animation (second hand only)
     private var prevDs = -1
 
@@ -249,5 +252,20 @@ class DecimalClockView @JvmOverloads constructor(
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         handler.removeCallbacks(updateRunnable)
+    }
+
+    fun setHue(hue: Float) {
+        currentHue = hue
+        updateColorsFromHue()
+        invalidate()
+    }
+
+    private fun updateColorsFromHue() {
+        // Generate accent color from hue for hands and numbers
+        val accentColor = Color.HSVToColor(floatArrayOf(currentHue, 0.3f, 1.0f))
+
+        handPaint.color = accentColor
+        numberPaint.color = accentColor
+        centerDotPaint.color = accentColor
     }
 }

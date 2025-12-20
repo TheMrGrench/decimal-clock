@@ -9,7 +9,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.decimalclock.databinding.ActivityMainBinding
 import java.util.Calendar
 
@@ -20,16 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
 
     private var timeVisible = true
-    private var currentTheme = 1
-
-    private val colorThemes = arrayOf(
-        Pair(R.color.theme1_start, R.color.theme1_end),
-        Pair(R.color.theme2_start, R.color.theme2_end),
-        Pair(R.color.theme3_start, R.color.theme3_end),
-        Pair(R.color.theme4_start, R.color.theme4_end),
-        Pair(R.color.theme5_start, R.color.theme5_end),
-        Pair(R.color.theme6_start, R.color.theme6_end)
-    )
+    private var currentHue = 270f
 
     private val updateTimeRunnable = object : Runnable {
         override fun run() {
@@ -73,16 +63,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadSettings() {
-        // Загружаем тему
-        currentTheme = prefs.getInt("selectedTheme", 1)
-        val theme = colorThemes[currentTheme - 1]
-        val startColor = ContextCompat.getColor(this, theme.first)
-        val endColor = ContextCompat.getColor(this, theme.second)
-        updateBackgroundGradient(startColor, endColor)
+        // Загружаем цветовой оттенок
+        currentHue = prefs.getFloat("colorHue", 270f)
+        val colors = SettingsActivity.generateGradientColors(currentHue)
+        updateBackgroundGradient(colors.first, colors.second)
 
         // Загружаем видимость времени
         timeVisible = prefs.getBoolean("timeVisible", true)
         binding.standardTime.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
+
+        // Обновляем цвет циферблата
+        binding.decimalClock.setHue(currentHue)
     }
 
     private fun updateBackgroundGradient(startColor: Int, endColor: Int) {
