@@ -1,0 +1,13 @@
+# Замените путь на ваш путь к Android SDK
+
+# Windows (пример):
+# sdk.dir=C\:\\Users\\YourName\\AppData\\Local\\Android\\Sdk
+
+# Linux (пример):
+# sdk.dir=/home/yourname/Android/Sdk
+
+# Mac (пример):
+# sdk.dir=/Users/yourname/Library/Android/sdk
+
+# Docker/этот контейнер (если SDK установлен):
+# sdk.dir=/opt/android-sdk
