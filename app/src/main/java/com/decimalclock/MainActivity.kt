@@ -1,16 +1,15 @@
 package com.decimalclock
 
-import android.animation.ArgbEvaluator
-import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.decimalclock.databinding.ActivityMainBinding
@@ -48,125 +47,31 @@ class MainActivity : AppCompatActivity() {
 
         prefs = getSharedPreferences("DecimalClockPrefs", Context.MODE_PRIVATE)
 
-        setupColorButtons()
         setupToggleButton()
         loadSettings()
 
         handler.post(updateTimeRunnable)
     }
 
-    private fun setupColorButtons() {
-        val colorButtons = listOf(
-            binding.colorBtn1,
-            binding.colorBtn2,
-            binding.colorBtn3,
-            binding.colorBtn4,
-            binding.colorBtn5,
-            binding.colorBtn6
-        )
+    override fun onResume() {
+        super.onResume()
+        // Перезагружаем настройки при возврате из Settings
+        loadSettings()
+    }
 
-        val gradients = listOf(
-            R.drawable.gradient_theme1,
-            R.drawable.gradient_theme2,
-            R.drawable.gradient_theme3,
-            R.drawable.gradient_theme4,
-            R.drawable.gradient_theme5,
-            R.drawable.gradient_theme6
-        )
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
 
-        colorButtons.forEachIndexed { index, button ->
-            // Set gradient background
-            button.setBackgroundResource(gradients[index])
-
-            // Apply foreground for border
-            button.foreground = ContextCompat.getDrawable(this, R.drawable.color_button_background)
-
-            button.setOnClickListener {
-                selectColorTheme(index + 1)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun selectColorTheme(theme: Int) {
-        if (theme == currentTheme) return
-
-        val oldTheme = currentTheme
-        currentTheme = theme
-
-        // Update button selection states
-        updateButtonStates()
-
-        // Animate background gradient
-        animateBackground(oldTheme - 1, theme - 1)
-
-        // Save to preferences
-        prefs.edit().putInt("selectedTheme", theme).apply()
-    }
-
-    private fun updateButtonStates() {
-        val colorButtons = listOf(
-            binding.colorBtn1,
-            binding.colorBtn2,
-            binding.colorBtn3,
-            binding.colorBtn4,
-            binding.colorBtn5,
-            binding.colorBtn6
-        )
-
-        colorButtons.forEachIndexed { index, button ->
-            button.isSelected = (index + 1) == currentTheme
-        }
-    }
-
-    private fun animateBackground(fromTheme: Int, toTheme: Int) {
-        val fromColors = colorThemes[fromTheme]
-        val toColors = colorThemes[toTheme]
-
-        val fromStartColor = ContextCompat.getColor(this, fromColors.first)
-        val fromEndColor = ContextCompat.getColor(this, fromColors.second)
-        val toStartColor = ContextCompat.getColor(this, toColors.first)
-        val toEndColor = ContextCompat.getColor(this, toColors.second)
-
-        val startColorAnimator = ValueAnimator.ofObject(
-            ArgbEvaluator(),
-            fromStartColor,
-            toStartColor
-        )
-        val endColorAnimator = ValueAnimator.ofObject(
-            ArgbEvaluator(),
-            fromEndColor,
-            toEndColor
-        )
-
-        startColorAnimator.duration = 600
-        endColorAnimator.duration = 600
-
-        startColorAnimator.interpolator = AccelerateDecelerateInterpolator()
-        endColorAnimator.interpolator = AccelerateDecelerateInterpolator()
-
-        var currentStartColor = fromStartColor
-        var currentEndColor = fromEndColor
-
-        startColorAnimator.addUpdateListener { animator ->
-            currentStartColor = animator.animatedValue as Int
-            updateBackgroundGradient(currentStartColor, currentEndColor)
-        }
-
-        endColorAnimator.addUpdateListener { animator ->
-            currentEndColor = animator.animatedValue as Int
-            updateBackgroundGradient(currentStartColor, currentEndColor)
-        }
-
-        startColorAnimator.start()
-        endColorAnimator.start()
-    }
-
-    private fun updateBackgroundGradient(startColor: Int, endColor: Int) {
-        val gradient = GradientDrawable(
-            GradientDrawable.Orientation.TL_BR,
-            intArrayOf(startColor, endColor)
-        )
-        binding.rootLayout.background = gradient
     }
 
     private fun setupToggleButton() {
@@ -195,16 +100,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadSettings() {
-        // Load theme
+        // Загружаем тему
         currentTheme = prefs.getInt("selectedTheme", 1)
-        updateButtonStates()
-
         val theme = colorThemes[currentTheme - 1]
         val startColor = ContextCompat.getColor(this, theme.first)
         val endColor = ContextCompat.getColor(this, theme.second)
         updateBackgroundGradient(startColor, endColor)
 
-        // Load time visibility
+        // Загружаем видимость времени
         timeVisible = prefs.getBoolean("timeVisible", true)
         if (timeVisible) {
             binding.standardTime.visibility = View.VISIBLE
@@ -213,6 +116,14 @@ class MainActivity : AppCompatActivity() {
             binding.standardTime.visibility = View.INVISIBLE
             binding.toggleButton.text = getString(R.string.show_time)
         }
+    }
+
+    private fun updateBackgroundGradient(startColor: Int, endColor: Int) {
+        val gradient = GradientDrawable(
+            GradientDrawable.Orientation.TL_BR,
+            intArrayOf(startColor, endColor)
+        )
+        binding.rootLayout.background = gradient
     }
 
     override fun onDestroy() {
