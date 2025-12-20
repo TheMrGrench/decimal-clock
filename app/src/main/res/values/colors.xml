@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Theme 1: Purple -->
+    <color name="theme1_start">#667eea</color>
+    <color name="theme1_end">#764ba2</color>
+
+    <!-- Theme 2: Pink -->
+    <color name="theme2_start">#f093fb</color>
+    <color name="theme2_end">#f5576c</color>
+
+    <!-- Theme 3: Cyan -->
+    <color name="theme3_start">#4facfe</color>
+    <color name="theme3_end">#00f2fe</color>
+
+    <!-- Theme 4: Green -->
+    <color name="theme4_start">#43e97b</color>
+    <color name="theme4_end">#38f9d7</color>
+
+    <!-- Theme 5: Orange -->
+    <color name="theme5_start">#fa709a</color>
+    <color name="theme5_end">#fee140</color>
+
+    <!-- Theme 6: Deep Blue -->
+    <color name="theme6_start">#30cfd0</color>
+    <color name="theme6_end">#330867</color>
+
+    <!-- Common colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="white_90">#E6FFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="white_50">#80FFFFFF</color>
+    <color name="white_30">#4DFFFFFF</color>
+    <color name="white_15">#26FFFFFF</color>
+    <color name="white_10">#1AFFFFFF</color>
+    <color name="black_30">#4D000000</color>
+</resources>
