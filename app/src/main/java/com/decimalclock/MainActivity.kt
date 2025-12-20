@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         binding.standardTime.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
 
         // Обновляем цвет циферблата
-        binding.decimalClock.setHue(currentHue)
+        binding.clockView.setHue(currentHue)
     }
 
     private fun updateBackgroundGradient(startColor: Int, endColor: Int) {
