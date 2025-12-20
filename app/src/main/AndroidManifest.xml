@@ -25,6 +25,7 @@
             android:name=".SettingsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.DecimalClock.Transparent"
             android:parentActivityName=".MainActivity" />
 
     </application>

@@ -1,160 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:clickable="true"
+    android:focusable="true">
 
-    <LinearLayout
-        android:id="@+id/rootLayout"
+    <!-- Затемнённый фон -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:clickable="true" />
+
+    <!-- Карточка настроек -->
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- Заголовок "Цветовая тема" -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Цветовая тема"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/white_90"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Кнопки выбора цветов -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="24dp">
-
-            <View
-                android:id="@+id/colorBtn1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="6dp"
-                android:background="@drawable/color_button_background"
-                android:tag="1" />
-
-            <View
-                android:id="@+id/colorBtn2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="6dp"
-                android:background="@drawable/color_button_background"
-                android:tag="2" />
-
-            <View
-                android:id="@+id/colorBtn3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="6dp"
-                android:background="@drawable/color_button_background"
-                android:tag="3" />
-
-        </LinearLayout>
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="24dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="12dp"
+        app:cardBackgroundColor="@color/white_15">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="32dp">
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="@drawable/toggle_button_background">
 
-            <View
-                android:id="@+id/colorBtn4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="6dp"
-                android:background="@drawable/color_button_background"
-                android:tag="4" />
-
-            <View
-                android:id="@+id/colorBtn5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="6dp"
-                android:background="@drawable/color_button_background"
-                android:tag="5" />
-
-            <View
-                android:id="@+id/colorBtn6"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="6dp"
-                android:background="@drawable/color_button_background"
-                android:tag="6" />
-
-        </LinearLayout>
-
-        <!-- Разделитель -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white_30"
-            android:layout_marginVertical="16dp" />
-
-        <!-- Заголовок "Отображение" -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Отображение"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/white_90"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Переключатель отображения времени -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingVertical="12dp">
-
+            <!-- Заголовок -->
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Показывать обычное время"
-                android:textSize="16sp"
-                android:textColor="@color/white_90" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/timeVisibilitySwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true" />
+                android:text="Настройки"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginBottom="24dp"
+                android:layout_gravity="center" />
+
+            <!-- Цветовая тема -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Цветовая тема"
+                android:textSize="16sp"
+                android:textColor="@color/white_90"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Слайдер выбора темы -->
+            <SeekBar
+                android:id="@+id/themeSeekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:progress="0"
+                android:progressTint="@color/white"
+                android:thumbTint="@color/white"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/themeNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Тема 1: Фиолетовый"
+                android:textSize="14sp"
+                android:textColor="@color/white_70"
+                android:layout_marginBottom="24dp"
+                android:layout_gravity="center" />
+
+            <!-- Разделитель -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_30"
+                android:layout_marginVertical="16dp" />
+
+            <!-- Отображение времени -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Показывать обычное время"
+                    android:textSize="16sp"
+                    android:textColor="@color/white_90" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/timeVisibilitySwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+            </LinearLayout>
+
+            <!-- Кнопка закрыть -->
+            <Button
+                android:id="@+id/closeButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Закрыть"
+                android:textColor="@color/white"
+                android:background="@drawable/toggle_button_background"
+                android:layout_marginTop="24dp"
+                android:stateListAnimator="@null" />
 
         </LinearLayout>
 
-        <!-- Разделитель -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white_30"
-            android:layout_marginVertical="16dp" />
+    </androidx.cardview.widget.CardView>
 
-        <!-- Информация -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="О приложении"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/white_90"
-            android:layout_marginBottom="12dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Decimal Clock v1.0\n\nДесятичные часы:\n• 10 часов в сутках\n• 100 минут в часе\n• 100 секунд в минуте"
-            android:textSize="14sp"
-            android:textColor="@color/white_70"
-            android:lineSpacingExtra="4dp" />
-
-    </LinearLayout>
-
-</ScrollView>
+</FrameLayout>

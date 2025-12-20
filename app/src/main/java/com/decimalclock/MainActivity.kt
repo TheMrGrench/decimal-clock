@@ -7,8 +7,6 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         prefs = getSharedPreferences("DecimalClockPrefs", Context.MODE_PRIVATE)
 
-        setupToggleButton()
+        setupFAB()
         loadSettings()
 
         handler.post(updateTimeRunnable)
@@ -59,34 +57,9 @@ class MainActivity : AppCompatActivity() {
         loadSettings()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun setupToggleButton() {
-        binding.toggleButton.setOnClickListener {
-            timeVisible = !timeVisible
-
-            if (timeVisible) {
-                binding.standardTime.visibility = View.VISIBLE
-                binding.toggleButton.text = getString(R.string.hide_time)
-            } else {
-                binding.standardTime.visibility = View.INVISIBLE
-                binding.toggleButton.text = getString(R.string.show_time)
-            }
-
-            prefs.edit().putBoolean("timeVisible", timeVisible).apply()
+    private fun setupFAB() {
+        binding.fabSettings.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
@@ -109,13 +82,7 @@ class MainActivity : AppCompatActivity() {
 
         // Загружаем видимость времени
         timeVisible = prefs.getBoolean("timeVisible", true)
-        if (timeVisible) {
-            binding.standardTime.visibility = View.VISIBLE
-            binding.toggleButton.text = getString(R.string.hide_time)
-        } else {
-            binding.standardTime.visibility = View.INVISIBLE
-            binding.toggleButton.text = getString(R.string.show_time)
-        }
+        binding.standardTime.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
     }
 
     private fun updateBackgroundGradient(startColor: Int, endColor: Int) {
