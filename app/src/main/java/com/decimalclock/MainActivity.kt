@@ -51,6 +51,14 @@ class MainActivity : AppCompatActivity() {
         binding.fabSettings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
+
+        binding.fabAlarm.setOnClickListener {
+            startActivity(Intent(this, AlarmActivity::class.java))
+        }
+
+        binding.fabTimer.setOnClickListener {
+            startActivity(Intent(this, TimerActivity::class.java))
+        }
     }
 
     private fun updateStandardTime() {
