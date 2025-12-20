@@ -24,6 +24,9 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Apply entrance animation
+        overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out)
+
         loadSettings()
         setupThemeSeekBar()
         setupTimeVisibilitySwitch()
@@ -62,6 +65,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun setupCloseButton() {
         binding.closeButton.setOnClickListener {
             finish()
+            overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_down)
         }
     }
 

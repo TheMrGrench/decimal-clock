@@ -3,4 +3,5 @@
     <string name="app_name">Decimal Clock</string>
     <string name="hide_time">Скрыть время</string>
     <string name="show_time">Показать время</string>
+    <string name="widget_description">Виджет десятичных часов</string>
 </resources>

@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="24dp"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="12dp"
+        app:cardCornerRadius="28dp"
+        app:cardElevation="24dp"
         app:cardBackgroundColor="@color/white_15">
 
         <LinearLayout
@@ -105,11 +105,14 @@
             <Button
                 android:id="@+id/closeButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="56dp"
                 android:text="Закрыть"
                 android:textColor="@color/white"
-                android:background="@drawable/toggle_button_background"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:background="@drawable/button_premium"
                 android:layout_marginTop="24dp"
+                android:elevation="4dp"
                 android:stateListAnimator="@null" />
 
         </LinearLayout>

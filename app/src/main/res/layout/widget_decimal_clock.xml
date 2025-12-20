@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_background"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Decimal time display -->
+        <TextView
+            android:id="@+id/widgetDecimalTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5:50:00"
+            android:textSize="48sp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:shadowColor="@color/black_30"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="8"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Standard time display -->
+        <TextView
+            android:id="@+id/widgetStandardTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:textSize="18sp"
+            android:textColor="@color/white_70"
+            android:fontFamily="sans-serif"
+            android:shadowColor="@color/black_30"
+            android:shadowDx="0"
+            android:shadowDy="1"
+            android:shadowRadius="4" />
+
+    </LinearLayout>
+
+</FrameLayout>
