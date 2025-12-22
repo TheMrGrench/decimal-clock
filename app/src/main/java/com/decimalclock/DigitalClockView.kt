@@ -37,9 +37,10 @@ class DigitalClockView @JvmOverloads constructor(
     }
 
     private fun setupPaints() {
-        // Digit paint - bright white with subtle shadow
+        // Digit paint - немного менее контрастный
         digitPaint.apply {
             color = Color.WHITE
+            alpha = 230
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
             setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
@@ -48,7 +49,7 @@ class DigitalClockView @JvmOverloads constructor(
         // Label paint - white subtle
         labelPaint.apply {
             color = Color.WHITE
-            alpha = 230
+            alpha = 200
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }

@@ -36,9 +36,10 @@ class StandardTimeView @JvmOverloads constructor(
     }
 
     private fun setupPaints() {
-        // Digit paint - bright white with subtle shadow
+        // Digit paint - как на цифровом табло
         digitPaint.apply {
             color = Color.WHITE
+            alpha = 230 // Немного менее контрастный
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
             setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))

@@ -58,33 +58,37 @@ class DecimalClockView @JvmOverloads constructor(
             style = Paint.Style.FILL
         }
 
-        // Number paint with shadow for better readability
+        // Number paint - как на цифровом табло
         numberPaint.apply {
             color = Color.WHITE
+            alpha = 230 // Немного менее контрастный
             textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-            setShadowLayer(8f, 0f, 0f, Color.parseColor("#80000000"))
+            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+            setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
         }
 
-        // Mark paint
+        // Mark paint - менее контрастный
         markPaint.apply {
-            color = Color.parseColor("#B3FFFFFF") // white_70 - more visible
+            color = Color.WHITE
+            alpha = 180
             style = Paint.Style.FILL
         }
 
-        // Hand paint with shadow
+        // Hand paint - менее контрастный
         handPaint.apply {
             color = Color.WHITE
+            alpha = 230
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
-            setShadowLayer(6f, 0f, 2f, Color.parseColor("#80000000"))
+            setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
         }
 
         // Center dot paint
         centerDotPaint.apply {
             color = Color.WHITE
+            alpha = 230
             style = Paint.Style.FILL
-            setShadowLayer(12f, 0f, 2f, Color.parseColor("#80000000"))
+            setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
         }
         setLayerType(LAYER_TYPE_SOFTWARE, numberPaint)
     }
