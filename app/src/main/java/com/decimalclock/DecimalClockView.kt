@@ -119,31 +119,12 @@ class DecimalClockView @JvmOverloads constructor(
     }
 
     private fun drawDial(canvas: Canvas) {
-        // Background circle
-        dialPaint.color = Color.parseColor("#1AFFFFFF") // white_10
+        // Background circle - темный как карточки цифр
+        dialPaint.color = Color.parseColor("#50000000")
         dialPaint.style = Paint.Style.FILL
+        dialPaint.setShadowLayer(8f, 0f, 3f, Color.parseColor("#60000000"))
         canvas.drawCircle(centerX, centerY, radius, dialPaint)
-
-        // Border
-        dialPaint.color = Color.parseColor("#4DFFFFFF") // white_30
-        dialPaint.style = Paint.Style.STROKE
-        dialPaint.strokeWidth = 2f
-        canvas.drawCircle(centerX, centerY, radius, dialPaint)
-
-        // Inner glow effect
-        val gradient = RadialGradient(
-            centerX, centerY - radius * 0.3f, radius * 1.2f,
-            intArrayOf(
-                Color.parseColor("#33FFFFFF"),
-                Color.parseColor("#00FFFFFF")
-            ),
-            floatArrayOf(0f, 1f),
-            Shader.TileMode.CLAMP
-        )
-        dialPaint.shader = gradient
-        dialPaint.style = Paint.Style.FILL
-        canvas.drawCircle(centerX, centerY, radius, dialPaint)
-        dialPaint.shader = null
+        dialPaint.setShadowLayer(0f, 0f, 0f, Color.TRANSPARENT)
     }
 
     private fun drawNumbers(canvas: Canvas) {

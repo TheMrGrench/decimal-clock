@@ -33,11 +33,27 @@ class SettingsActivity : AppCompatActivity() {
         binding.closeButton.backgroundTintList = android.content.res.ColorStateList.valueOf(pastelColor)
 
         // Применяем цвет к переключателям
-        val switchColor = android.content.res.ColorStateList.valueOf(pastelColor)
-        binding.timeVisibilitySwitch.thumbTintList = switchColor
-        binding.timeVisibilitySwitch.trackTintList = switchColor
-        binding.clockTypeSwitch.thumbTintList = switchColor
-        binding.clockTypeSwitch.trackTintList = switchColor
+        // Когда включен - цвет темы, когда выключен - цвет карточек (#50000000)
+        val cardColor = Color.parseColor("#50000000")
+        val switchThumbColor = android.content.res.ColorStateList(
+            arrayOf(
+                intArrayOf(android.R.attr.state_checked),
+                intArrayOf(-android.R.attr.state_checked)
+            ),
+            intArrayOf(pastelColor, cardColor)
+        )
+        val switchTrackColor = android.content.res.ColorStateList(
+            arrayOf(
+                intArrayOf(android.R.attr.state_checked),
+                intArrayOf(-android.R.attr.state_checked)
+            ),
+            intArrayOf(Color.argb(128, Color.red(pastelColor), Color.green(pastelColor), Color.blue(pastelColor)), cardColor)
+        )
+
+        binding.timeVisibilitySwitch.thumbTintList = switchThumbColor
+        binding.timeVisibilitySwitch.trackTintList = switchTrackColor
+        binding.clockTypeSwitch.thumbTintList = switchThumbColor
+        binding.clockTypeSwitch.trackTintList = switchTrackColor
     }
 
     private fun setupColorHueSeekBar() {
