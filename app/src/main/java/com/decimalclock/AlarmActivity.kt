@@ -33,29 +33,46 @@ class AlarmActivity : AppCompatActivity() {
     private fun setupTimeInput() {
         binding.alarmTimeInput.addTextChangedListener(object : TextWatcher {
             private var isUpdating = false
+            private var cursorPosition = 0
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!isUpdating) {
+                    cursorPosition = start + count
+                }
+            }
 
             override fun afterTextChanged(s: Editable?) {
-                if (isUpdating) return
+                if (isUpdating || s == null) return
 
                 isUpdating = true
 
                 val input = s.toString().replace(":", "").filter { it.isDigit() }
 
-                if (input.isEmpty()) {
-                    s?.clear()
-                } else {
-                    val formatted = when (input.length) {
-                        1 -> "$input:"
-                        2, 3 -> "${input[0]}:${input.substring(1)}"
-                        else -> "${input[0]}:${input.substring(1, 3)}"
+                val formatted = when {
+                    input.isEmpty() -> ""
+                    input.length == 1 -> "$input:"
+                    input.length == 2 -> "${input[0]}:${input[1]}"
+                    input.length >= 3 -> "${input[0]}:${input.substring(1, minOf(3, input.length))}"
+                    else -> input
+                }
+
+                if (formatted != s.toString()) {
+                    s.replace(0, s.length, formatted)
+
+                    // Set cursor position
+                    val newCursorPos = when {
+                        formatted.isEmpty() -> 0
+                        cursorPosition <= 1 -> minOf(cursorPosition, formatted.length)
+                        cursorPosition == 2 && formatted.length >= 2 -> 2
+                        else -> formatted.length
                     }
 
-                    if (formatted != s.toString()) {
-                        s?.replace(0, s.length, formatted)
+                    try {
+                        binding.alarmTimeInput.setSelection(minOf(newCursorPos, formatted.length))
+                    } catch (e: Exception) {
+                        // Ignore cursor positioning errors
                     }
                 }
 

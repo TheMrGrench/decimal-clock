@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         // Загружаем видимость времени
         timeVisible = prefs.getBoolean("timeVisible", true)
-        binding.standardTime.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
+        binding.standardTimeCard.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
 
         // Загружаем тип часов (аналоговый/цифровой)
         val isDigital = prefs.getBoolean("clockTypeDigital", false)

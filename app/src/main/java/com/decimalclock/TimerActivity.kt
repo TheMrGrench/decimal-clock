@@ -46,32 +46,41 @@ class TimerActivity : AppCompatActivity() {
     private fun setupTimeInput() {
         binding.customTimeInput.addTextChangedListener(object : TextWatcher {
             private var isUpdating = false
+            private var cursorPosition = 0
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (!isUpdating) {
+                    cursorPosition = start + count
+                }
+            }
 
             override fun afterTextChanged(s: Editable?) {
-                if (isUpdating) return
+                if (isUpdating || s == null) return
 
                 isUpdating = true
 
                 val input = s.toString().replace(":", "").filter { it.isDigit() }
 
-                if (input.isEmpty()) {
-                    s?.clear()
-                } else {
-                    val formatted = when (input.length) {
-                        1 -> "$input:"
-                        2 -> "${input[0]}:${input[1]}"
-                        3 -> "${input[0]}:${input.substring(1)}"
-                        4 -> "${input[0]}:${input.substring(1, 3)}:${input[3]}"
-                        5, 6 -> "${input[0]}:${input.substring(1, 3)}:${input.substring(3)}"
-                        else -> "${input[0]}:${input.substring(1, 3)}:${input.substring(3, 5)}"
-                    }
+                val formatted = when {
+                    input.isEmpty() -> ""
+                    input.length == 1 -> "$input:"
+                    input.length == 2 -> "${input[0]}:${input[1]}"
+                    input.length == 3 -> "${input[0]}:${input.substring(1)}"
+                    input.length == 4 -> "${input[0]}:${input.substring(1, 3)}:${input[3]}"
+                    input.length == 5 -> "${input[0]}:${input.substring(1, 3)}:${input.substring(3)}"
+                    input.length >= 6 -> "${input[0]}:${input.substring(1, 3)}:${input.substring(3, 5)}"
+                    else -> input
+                }
 
-                    if (formatted != s.toString()) {
-                        s?.replace(0, s.length, formatted)
+                if (formatted != s.toString()) {
+                    s.replace(0, s.length, formatted)
+
+                    try {
+                        binding.customTimeInput.setSelection(minOf(formatted.length, formatted.length))
+                    } catch (e: Exception) {
+                        // Ignore cursor positioning errors
                     }
                 }
 

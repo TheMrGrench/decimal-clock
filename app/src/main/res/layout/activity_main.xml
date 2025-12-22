@@ -28,32 +28,41 @@
         app:layout_constraintWidth_percent="0.85"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/standardTime"
+        app:layout_constraintBottom_toTopOf="@id/standardTimeCard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/standardTime"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/standardTimeCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00:00"
-        android:textSize="32sp"
-        android:textColor="@color/white_90"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="bold"
-        android:shadowColor="@color/black_30"
-        android:shadowDx="0"
-        android:shadowDy="2"
-        android:shadowRadius="15"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/white_15"
         app:layout_constraintTop_toBottomOf="@id/clockView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <TextView
+            android:id="@+id/standardTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00:00"
+            android:textSize="36sp"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="bold"
+            android:paddingHorizontal="28dp"
+            android:paddingVertical="14dp"
+            android:letterSpacing="0.05" />
+
+    </androidx.cardview.widget.CardView>
 
     <!-- Alarm button - bottom left -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -64,9 +73,8 @@
         android:src="@drawable/ic_alarm"
         android:contentDescription="Будильник"
         app:tint="@color/white"
-        app:backgroundTint="#50FFFFFF"
         app:borderWidth="0dp"
-        app:elevation="0dp"
+        app:elevation="4dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -80,9 +88,8 @@
         android:src="@drawable/ic_timer"
         android:contentDescription="Таймер"
         app:tint="@color/white"
-        app:backgroundTint="#50FFFFFF"
         app:borderWidth="0dp"
-        app:elevation="0dp"
+        app:elevation="4dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -95,9 +102,8 @@
         android:src="@drawable/ic_menu_hamburger"
         android:contentDescription="Настройки"
         app:tint="@color/white"
-        app:backgroundTint="#50FFFFFF"
         app:borderWidth="0dp"
-        app:elevation="0dp"
+        app:elevation="4dp"
         app:fabSize="mini"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -37,24 +37,28 @@ class DigitalClockView @JvmOverloads constructor(
     }
 
     private fun setupPaints() {
-        // Digit paint - large and bold
+        // Digit paint - large and bold, fully white
         digitPaint.apply {
             color = Color.WHITE
+            alpha = 255
             textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
+            setShadowLayer(8f, 0f, 2f, Color.parseColor("#40000000"))
         }
 
         // Label paint - small and subtle
         labelPaint.apply {
-            color = Color.parseColor("#CCFFFFFF")
+            color = Color.WHITE
+            alpha = 204
             textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
+            typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
 
-        // Card background paint
+        // Card background paint - brighter
         cardPaint.apply {
-            color = Color.parseColor("#80FFFFFF")
+            color = Color.parseColor("#A0FFFFFF")
             style = Paint.Style.FILL
+            setShadowLayer(12f, 0f, 4f, Color.parseColor("#40000000"))
         }
 
         setLayerType(LAYER_TYPE_SOFTWARE, cardPaint)
