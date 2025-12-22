@@ -35,10 +35,30 @@ class TimerActivity : AppCompatActivity() {
 
         overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out)
 
+        applyThemeColors()
         setupTimeInput()
         setupPresets()
         setupButtons()
         setupCloseButton()
+    }
+
+    private fun applyThemeColors() {
+        val prefs = getSharedPreferences("DecimalClockPrefs", MODE_PRIVATE)
+        val currentHue = prefs.getFloat("colorHue", 270f)
+        val pastelColor = SettingsActivity.generatePastelColor(currentHue)
+
+        // Применяем цвет к кнопкам
+        val colorStateList = android.content.res.ColorStateList.valueOf(pastelColor)
+        binding.startButton.backgroundTintList = colorStateList
+        binding.resetButton.backgroundTintList = colorStateList
+        binding.closeButton.backgroundTintList = colorStateList
+
+        // Применяем к пресетам
+        binding.preset1.backgroundTintList = colorStateList
+        binding.preset2.backgroundTintList = colorStateList
+        binding.preset5.backgroundTintList = colorStateList
+        binding.preset20.backgroundTintList = colorStateList
+        binding.preset1h.backgroundTintList = colorStateList
     }
 
     private fun setupTimeInput() {

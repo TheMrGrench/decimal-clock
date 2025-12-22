@@ -22,10 +22,23 @@ class AlarmActivity : AppCompatActivity() {
 
         overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out)
 
+        applyThemeColors()
         setupTimeInput()
         setupButtons()
         setupCloseButton()
         loadSavedAlarm()
+    }
+
+    private fun applyThemeColors() {
+        val prefs = getSharedPreferences("DecimalClockPrefs", MODE_PRIVATE)
+        val currentHue = prefs.getFloat("colorHue", 270f)
+        val pastelColor = SettingsActivity.generatePastelColor(currentHue)
+
+        // Применяем цвет к кнопкам
+        val colorStateList = android.content.res.ColorStateList.valueOf(pastelColor)
+        binding.setAlarmButton.backgroundTintList = colorStateList
+        binding.cancelAlarmButton.backgroundTintList = colorStateList
+        binding.closeButton.backgroundTintList = colorStateList
     }
 
     private fun setupTimeInput() {
