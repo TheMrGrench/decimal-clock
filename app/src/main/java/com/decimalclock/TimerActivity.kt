@@ -62,17 +62,54 @@ class TimerActivity : AppCompatActivity() {
     }
 
     private fun setupTimeInput() {
-        // Простой ввод без автоформатирования
-        binding.customTimeInput.hint = "0:00:00"
+        // NumberPicker'ы для десятичного времени
+        binding.timerHoursPicker.minValue = 0
+        binding.timerHoursPicker.maxValue = 9
+        binding.timerHoursPicker.value = 0
+
+        binding.timerMinutesPicker.minValue = 0
+        binding.timerMinutesPicker.maxValue = 99
+        binding.timerMinutesPicker.value = 0
+        binding.timerMinutesPicker.setFormatter { String.format("%02d", it) }
+
+        binding.timerSecondsPicker.minValue = 0
+        binding.timerSecondsPicker.maxValue = 99
+        binding.timerSecondsPicker.value = 0
+        binding.timerSecondsPicker.setFormatter { String.format("%02d", it) }
     }
 
     private fun setupPresets() {
         // Presets in decimal minutes
-        binding.preset1.setOnClickListener { setTimer(0, 1, 0) }
-        binding.preset2.setOnClickListener { setTimer(0, 2, 0) }
-        binding.preset5.setOnClickListener { setTimer(0, 5, 0) }
-        binding.preset20.setOnClickListener { setTimer(0, 20, 0) }
-        binding.preset1h.setOnClickListener { setTimer(1, 0, 0) }
+        binding.preset1.setOnClickListener {
+            binding.timerHoursPicker.value = 0
+            binding.timerMinutesPicker.value = 1
+            binding.timerSecondsPicker.value = 0
+            setTimer(0, 1, 0)
+        }
+        binding.preset2.setOnClickListener {
+            binding.timerHoursPicker.value = 0
+            binding.timerMinutesPicker.value = 2
+            binding.timerSecondsPicker.value = 0
+            setTimer(0, 2, 0)
+        }
+        binding.preset5.setOnClickListener {
+            binding.timerHoursPicker.value = 0
+            binding.timerMinutesPicker.value = 5
+            binding.timerSecondsPicker.value = 0
+            setTimer(0, 5, 0)
+        }
+        binding.preset20.setOnClickListener {
+            binding.timerHoursPicker.value = 0
+            binding.timerMinutesPicker.value = 20
+            binding.timerSecondsPicker.value = 0
+            setTimer(0, 20, 0)
+        }
+        binding.preset1h.setOnClickListener {
+            binding.timerHoursPicker.value = 1
+            binding.timerMinutesPicker.value = 0
+            binding.timerSecondsPicker.value = 0
+            setTimer(1, 0, 0)
+        }
     }
 
     private fun setupButtons() {
@@ -80,33 +117,13 @@ class TimerActivity : AppCompatActivity() {
             if (isRunning) {
                 pauseTimer()
             } else {
-                // Check for custom input
-                val text = binding.customTimeInput.text.toString()
-                val parts = text.split(":")
+                // Получаем значения из NumberPicker'ов
+                val hours = binding.timerHoursPicker.value
+                val minutes = binding.timerMinutesPicker.value
+                val seconds = binding.timerSecondsPicker.value
 
-                var hours = 0
-                var minutes = 0
-                var seconds = 0
-
-                when (parts.size) {
-                    3 -> {
-                        hours = parts[0].toIntOrNull() ?: 0
-                        minutes = parts[1].toIntOrNull() ?: 0
-                        seconds = parts[2].toIntOrNull() ?: 0
-                    }
-                    2 -> {
-                        hours = parts[0].toIntOrNull() ?: 0
-                        minutes = parts[1].toIntOrNull() ?: 0
-                    }
-                    1 -> {
-                        hours = parts[0].toIntOrNull() ?: 0
-                    }
-                }
-
-                if (hours in 0..9 && minutes in 0..99 && seconds in 0..99) {
-                    if (hours > 0 || minutes > 0 || seconds > 0) {
-                        setTimer(hours, minutes, seconds)
-                    }
+                if (hours > 0 || minutes > 0 || seconds > 0) {
+                    setTimer(hours, minutes, seconds)
                 }
 
                 startTimer()

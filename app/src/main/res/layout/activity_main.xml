@@ -40,9 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
-        app:cardCornerRadius="24dp"
+        app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
-        app:cardBackgroundColor="@color/white_15"
+        app:cardBackgroundColor="#50000000"
         app:layout_constraintTop_toBottomOf="@id/clockView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,9 +58,9 @@
             android:textColor="@color/white"
             android:fontFamily="sans-serif-medium"
             android:textStyle="bold"
-            android:paddingHorizontal="28dp"
-            android:paddingVertical="14dp"
-            android:letterSpacing="0.05" />
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="16dp"
+            android:letterSpacing="0.08" />
 
     </androidx.cardview.widget.CardView>
 

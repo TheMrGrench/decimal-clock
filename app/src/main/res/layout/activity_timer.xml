@@ -75,21 +75,50 @@
                 android:background="@color/white_30"
                 android:layout_marginVertical="16dp" />
 
-            <EditText
-                android:id="@+id/customTimeInput"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:hint="0:00:00"
-                android:inputType="number"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white_50"
-                android:backgroundTint="@android:color/transparent"
-                android:textAlignment="center"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                android:maxLength="7"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="24dp">
+
+                <NumberPicker
+                    android:id="@+id/timerHoursPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:theme="@style/TimePickerTheme" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textSize="42sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:paddingHorizontal="8dp" />
+
+                <NumberPicker
+                    android:id="@+id/timerMinutesPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:theme="@style/TimePickerTheme" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"
+                    android:textSize="42sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:paddingHorizontal="8dp" />
+
+                <NumberPicker
+                    android:id="@+id/timerSecondsPicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="180dp"
+                    android:theme="@style/TimePickerTheme" />
+
+            </LinearLayout>
 
             <!-- Кнопки управления -->
             <LinearLayout
