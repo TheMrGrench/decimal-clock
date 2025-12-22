@@ -50,30 +50,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:textStyle="bold"
                 android:layout_gravity="center"
-                android:layout_marginBottom="24dp" />
-
-            <!-- Пресеты -->
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="5"
-                android:rowCount="1"
-                android:layout_marginBottom="16dp">
-
-                <Button android:id="@+id/preset1" style="@style/PresetButtonStyle" android:text="1" />
-                <Button android:id="@+id/preset2" style="@style/PresetButtonStyle" android:text="2" />
-                <Button android:id="@+id/preset5" style="@style/PresetButtonStyle" android:text="5" />
-                <Button android:id="@+id/preset20" style="@style/PresetButtonStyle" android:text="20" />
-                <Button android:id="@+id/preset1h" style="@style/PresetButtonStyle" android:text="1ч" />
-
-            </GridLayout>
-
-            <!-- Разделитель -->
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/white_30"
-                android:layout_marginVertical="16dp" />
+                android:layout_marginBottom="32dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

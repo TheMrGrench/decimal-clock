@@ -21,10 +21,16 @@ class SettingsActivity : AppCompatActivity() {
         overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out)
 
         loadSettings()
+        applyThemeColors()
         setupColorHueSeekBar()
         setupTimeVisibilitySwitch()
         setupClockTypeSwitch()
         setupCloseButton()
+    }
+
+    private fun applyThemeColors() {
+        val pastelColor = generatePastelColor(currentHue)
+        binding.closeButton.backgroundTintList = android.content.res.ColorStateList.valueOf(pastelColor)
     }
 
     private fun setupColorHueSeekBar() {

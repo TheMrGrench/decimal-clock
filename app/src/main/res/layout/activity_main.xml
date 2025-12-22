@@ -34,35 +34,18 @@
         app:layout_constraintVertical_chainStyle="packed"
         android:visibility="gone" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/standardTimeCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+    <com.decimalclock.StandardTimeView
+        android:id="@+id/standardTimeView"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="56dp"
         android:layout_marginBottom="32dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        app:cardBackgroundColor="#50000000"
+        app:layout_constraintWidth_percent="0.85"
         app:layout_constraintTop_toBottomOf="@id/clockView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_chainStyle="packed">
-
-        <TextView
-            android:id="@+id/standardTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00:00:00"
-            android:textSize="36sp"
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-medium"
-            android:textStyle="bold"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="16dp"
-            android:letterSpacing="0.08" />
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <!-- Alarm button - bottom left -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

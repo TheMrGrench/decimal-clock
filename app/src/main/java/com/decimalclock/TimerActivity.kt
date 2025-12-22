@@ -37,7 +37,6 @@ class TimerActivity : AppCompatActivity() {
 
         applyThemeColors()
         setupTimeInput()
-        setupPresets()
         setupButtons()
         setupCloseButton()
     }
@@ -52,13 +51,6 @@ class TimerActivity : AppCompatActivity() {
         binding.startButton.backgroundTintList = colorStateList
         binding.resetButton.backgroundTintList = colorStateList
         binding.closeButton.backgroundTintList = colorStateList
-
-        // Применяем к пресетам
-        binding.preset1.backgroundTintList = colorStateList
-        binding.preset2.backgroundTintList = colorStateList
-        binding.preset5.backgroundTintList = colorStateList
-        binding.preset20.backgroundTintList = colorStateList
-        binding.preset1h.backgroundTintList = colorStateList
     }
 
     private fun setupTimeInput() {
@@ -76,40 +68,6 @@ class TimerActivity : AppCompatActivity() {
         binding.timerSecondsPicker.maxValue = 99
         binding.timerSecondsPicker.value = 0
         binding.timerSecondsPicker.setFormatter { String.format("%02d", it) }
-    }
-
-    private fun setupPresets() {
-        // Presets in decimal minutes
-        binding.preset1.setOnClickListener {
-            binding.timerHoursPicker.value = 0
-            binding.timerMinutesPicker.value = 1
-            binding.timerSecondsPicker.value = 0
-            setTimer(0, 1, 0)
-        }
-        binding.preset2.setOnClickListener {
-            binding.timerHoursPicker.value = 0
-            binding.timerMinutesPicker.value = 2
-            binding.timerSecondsPicker.value = 0
-            setTimer(0, 2, 0)
-        }
-        binding.preset5.setOnClickListener {
-            binding.timerHoursPicker.value = 0
-            binding.timerMinutesPicker.value = 5
-            binding.timerSecondsPicker.value = 0
-            setTimer(0, 5, 0)
-        }
-        binding.preset20.setOnClickListener {
-            binding.timerHoursPicker.value = 0
-            binding.timerMinutesPicker.value = 20
-            binding.timerSecondsPicker.value = 0
-            setTimer(0, 20, 0)
-        }
-        binding.preset1h.setOnClickListener {
-            binding.timerHoursPicker.value = 1
-            binding.timerMinutesPicker.value = 0
-            binding.timerSecondsPicker.value = 0
-            setTimer(1, 0, 0)
-        }
     }
 
     private fun setupButtons() {

@@ -5,28 +5,17 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.decimalclock.databinding.ActivityMainBinding
-import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var prefs: SharedPreferences
-    private val handler = Handler(Looper.getMainLooper())
 
     private var timeVisible = true
     private var currentHue = 270f
-
-    private val updateTimeRunnable = object : Runnable {
-        override fun run() {
-            updateStandardTime()
-            handler.postDelayed(this, 100)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         setupFAB()
         loadSettings()
-
-        handler.post(updateTimeRunnable)
     }
 
     override fun onResume() {
@@ -61,15 +48,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateStandardTime() {
-        val now = Calendar.getInstance()
-        val h = now.get(Calendar.HOUR_OF_DAY)
-        val m = now.get(Calendar.MINUTE)
-        val s = now.get(Calendar.SECOND)
-
-        binding.standardTime.text = String.format("%02d:%02d:%02d", h, m, s)
-    }
-
     private fun loadSettings() {
         // Загружаем цветовой оттенок
         currentHue = prefs.getFloat("colorHue", 270f)
@@ -84,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         // Загружаем видимость времени
         timeVisible = prefs.getBoolean("timeVisible", true)
-        binding.standardTimeCard.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
+        binding.standardTimeView.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
 
         // Загружаем тип часов (аналоговый/цифровой)
         val isDigital = prefs.getBoolean("clockTypeDigital", false)
@@ -105,10 +83,5 @@ class MainActivity : AppCompatActivity() {
             intArrayOf(startColor, endColor)
         )
         binding.rootLayout.background = gradient
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        handler.removeCallbacks(updateTimeRunnable)
     }
 }
