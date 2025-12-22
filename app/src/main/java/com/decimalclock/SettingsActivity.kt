@@ -31,6 +31,13 @@ class SettingsActivity : AppCompatActivity() {
     private fun applyThemeColors() {
         val pastelColor = generatePastelColor(currentHue)
         binding.closeButton.backgroundTintList = android.content.res.ColorStateList.valueOf(pastelColor)
+
+        // Применяем цвет к переключателям
+        val switchColor = android.content.res.ColorStateList.valueOf(pastelColor)
+        binding.timeVisibilitySwitch.thumbTintList = switchColor
+        binding.timeVisibilitySwitch.trackTintList = switchColor
+        binding.clockTypeSwitch.thumbTintList = switchColor
+        binding.clockTypeSwitch.trackTintList = switchColor
     }
 
     private fun setupColorHueSeekBar() {
@@ -44,6 +51,7 @@ class SettingsActivity : AppCompatActivity() {
                 binding.colorHueText.text = "Оттенок: ${progress}°"
                 updateColorPreview(currentHue)
                 updateBackgroundGradient(currentHue)
+                applyThemeColors() // Обновляем цвета элементов
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
