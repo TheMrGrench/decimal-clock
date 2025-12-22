@@ -53,7 +53,7 @@ class DigitalClockView @JvmOverloads constructor(
 
         // Card background paint
         cardPaint.apply {
-            color = Color.parseColor("#30FFFFFF")
+            color = Color.parseColor("#80FFFFFF")
             style = Paint.Style.FILL
         }
 

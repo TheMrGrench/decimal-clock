@@ -110,5 +110,10 @@ class SettingsActivity : AppCompatActivity() {
             val endColor = Color.HSVToColor(floatArrayOf(hue, 0.8f, 0.7f))
             return Pair(startColor, endColor)
         }
+
+        fun generatePastelColor(hue: Float): Int {
+            // Pastel: low saturation (0.35), high value (0.85)
+            return Color.HSVToColor(128, floatArrayOf(hue, 0.35f, 0.85f))
+        }
     }
 }

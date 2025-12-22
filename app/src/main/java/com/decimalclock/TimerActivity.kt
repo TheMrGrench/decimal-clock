@@ -3,6 +3,8 @@ package com.decimalclock
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import com.decimalclock.databinding.ActivityTimerBinding
 
@@ -35,24 +37,56 @@ class TimerActivity : AppCompatActivity() {
 
         overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out)
 
+        setupTimeInput()
         setupPresets()
         setupButtons()
         setupCloseButton()
+    }
+
+    private fun setupTimeInput() {
+        binding.customTimeInput.addTextChangedListener(object : TextWatcher {
+            private var isUpdating = false
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isUpdating) return
+
+                isUpdating = true
+
+                val input = s.toString().replace(":", "").filter { it.isDigit() }
+
+                if (input.isEmpty()) {
+                    s?.clear()
+                } else {
+                    val formatted = when (input.length) {
+                        1 -> "$input:"
+                        2 -> "${input[0]}:${input[1]}"
+                        3 -> "${input[0]}:${input.substring(1)}"
+                        4 -> "${input[0]}:${input.substring(1, 3)}:${input[3]}"
+                        5, 6 -> "${input[0]}:${input.substring(1, 3)}:${input.substring(3)}"
+                        else -> "${input[0]}:${input.substring(1, 3)}:${input.substring(3, 5)}"
+                    }
+
+                    if (formatted != s.toString()) {
+                        s?.replace(0, s.length, formatted)
+                    }
+                }
+
+                isUpdating = false
+            }
+        })
     }
 
     private fun setupPresets() {
         // Presets in decimal minutes
         binding.preset1.setOnClickListener { setTimer(0, 1, 0) }
         binding.preset2.setOnClickListener { setTimer(0, 2, 0) }
-        binding.preset3.setOnClickListener { setTimer(0, 3, 0) }
         binding.preset5.setOnClickListener { setTimer(0, 5, 0) }
-        binding.preset10.setOnClickListener { setTimer(0, 10, 0) }
-        binding.preset15.setOnClickListener { setTimer(0, 15, 0) }
         binding.preset20.setOnClickListener { setTimer(0, 20, 0) }
-        binding.preset30.setOnClickListener { setTimer(0, 30, 0) }
         binding.preset1h.setOnClickListener { setTimer(1, 0, 0) }
-        binding.preset2h.setOnClickListener { setTimer(2, 0, 0) }
-        binding.preset3h.setOnClickListener { setTimer(3, 0, 0) }
     }
 
     private fun setupButtons() {
@@ -61,12 +95,32 @@ class TimerActivity : AppCompatActivity() {
                 pauseTimer()
             } else {
                 // Check for custom input
-                val hours = binding.customHours.text.toString().toIntOrNull() ?: 0
-                val minutes = binding.customMinutes.text.toString().toIntOrNull() ?: 0
-                val seconds = binding.customSeconds.text.toString().toIntOrNull() ?: 0
+                val text = binding.customTimeInput.text.toString()
+                val parts = text.split(":")
 
-                if (hours > 0 || minutes > 0 || seconds > 0) {
-                    setTimer(hours, minutes, seconds)
+                var hours = 0
+                var minutes = 0
+                var seconds = 0
+
+                when (parts.size) {
+                    3 -> {
+                        hours = parts[0].toIntOrNull() ?: 0
+                        minutes = parts[1].toIntOrNull() ?: 0
+                        seconds = parts[2].toIntOrNull() ?: 0
+                    }
+                    2 -> {
+                        hours = parts[0].toIntOrNull() ?: 0
+                        minutes = parts[1].toIntOrNull() ?: 0
+                    }
+                    1 -> {
+                        hours = parts[0].toIntOrNull() ?: 0
+                    }
+                }
+
+                if (hours in 0..9 && minutes in 0..99 && seconds in 0..99) {
+                    if (hours > 0 || minutes > 0 || seconds > 0) {
+                        setTimer(hours, minutes, seconds)
+                    }
                 }
 
                 startTimer()
