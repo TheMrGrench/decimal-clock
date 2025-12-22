@@ -46,6 +46,20 @@
             android:theme="@style/Theme.DecimalClock.Transparent"
             android:parentActivityName=".MainActivity" />
 
+        <activity
+            android:name=".AlarmDismissActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name=".TimerAlertActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:excludeFromRecents="true" />
+
         <receiver
             android:name=".DecimalClockWidgetProvider"
             android:exported="true">

@@ -23,7 +23,7 @@ class TimerActivity : AppCompatActivity() {
                 handler.postDelayed(this, 864) // 86400ms / 100 = 864ms per decimal second
             } else {
                 stopTimer()
-                // TODO: Play alarm sound
+                openTimerAlert()
             }
         }
     }
@@ -124,6 +124,12 @@ class TimerActivity : AppCompatActivity() {
         val seconds = remainingDecimalSeconds % 100
 
         binding.timerDisplay.text = String.format("%d:%02d:%02d", hours, minutes, seconds)
+    }
+
+    private fun openTimerAlert() {
+        val intent = android.content.Intent(this, TimerAlertActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onDestroy() {

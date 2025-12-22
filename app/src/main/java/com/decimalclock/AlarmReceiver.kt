@@ -9,20 +9,24 @@ import android.net.Uri
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        // Play alarm sound
-        val alarmUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-            ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-
-        val ringtone = RingtoneManager.getRingtone(context, alarmUri)
-        ringtone.play()
+        // Get saved alarm info
+        val prefs = context.getSharedPreferences("DecimalClockPrefs", Context.MODE_PRIVATE)
+        val decimalHours = prefs.getInt("alarmDecimalHours", 0)
+        val decimalMinutes = prefs.getInt("alarmDecimalMinutes", 0)
+        val decimalTime = String.format("%d:%02d", decimalHours, decimalMinutes)
 
         // Clear alarm from preferences
-        val prefs = context.getSharedPreferences("DecimalClockPrefs", Context.MODE_PRIVATE)
         prefs.edit().apply {
             putBoolean("alarmSet", false)
             apply()
         }
 
-        // TODO: Show notification or open alarm dismiss activity
+        // Open AlarmDismissActivity
+        val alarmIntent = Intent(context, AlarmDismissActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra("ALARM_TIME", decimalTime)
+        }
+        context.startActivity(alarmIntent)
     }
 }

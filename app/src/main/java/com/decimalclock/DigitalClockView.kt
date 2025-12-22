@@ -37,28 +37,28 @@ class DigitalClockView @JvmOverloads constructor(
     }
 
     private fun setupPaints() {
-        // Time digits paint
+        // Time digits paint - clean and bold
         timePaint.apply {
             color = Color.WHITE
             textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
-            setShadowLayer(12f, 0f, 4f, Color.parseColor("#80000000"))
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            setShadowLayer(16f, 0f, 0f, Color.parseColor("#50000000"))
         }
 
-        // Label paint (for "hours", "minutes", "seconds")
+        // Label paint - subtle
         labelPaint.apply {
+            color = Color.parseColor("#B3FFFFFF")
+            textAlign = Paint.Align.CENTER
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
+            setShadowLayer(4f, 0f, 0f, Color.parseColor("#50000000"))
+        }
+
+        // Separator paint
+        separatorPaint.apply {
             color = Color.parseColor("#CCFFFFFF")
             textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
-            setShadowLayer(6f, 0f, 2f, Color.parseColor("#80000000"))
-        }
-
-        // Separator paint (for ":")
-        separatorPaint.apply {
-            color = Color.parseColor("#E6FFFFFF")
-            textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.MONOSPACE, Typeface.BOLD)
-            setShadowLayer(8f, 0f, 3f, Color.parseColor("#80000000"))
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            setShadowLayer(8f, 0f, 0f, Color.parseColor("#50000000"))
         }
 
         setLayerType(LAYER_TYPE_SOFTWARE, timePaint)
@@ -80,47 +80,21 @@ class DigitalClockView @JvmOverloads constructor(
         val centerX = width / 2f
         val centerY = height / 2f
 
-        // Draw background card
-        drawBackground(canvas)
-
         // Format time
         val timeStr = String.format("%d:%02d:%02d", decimalHours, decimalMinutes, decimalSeconds)
 
-        // Draw time
-        canvas.drawText(timeStr, centerX, centerY, timePaint)
+        // Draw time - clean, no background
+        val textBounds = Rect()
+        timePaint.getTextBounds(timeStr, 0, timeStr.length, textBounds)
+        canvas.drawText(timeStr, centerX, centerY - textBounds.exactCenterY(), timePaint)
 
-        // Draw labels below
-        val labelY = centerY + timePaint.textSize * 0.6f
+        // Draw subtle labels below
+        val labelY = centerY + timePaint.textSize * 0.5f
         val sectionWidth = width / 3f
 
-        labelPaint.textSize = width * 0.04f
         canvas.drawText("часы", sectionWidth * 0.5f, labelY, labelPaint)
         canvas.drawText("минуты", sectionWidth * 1.5f, labelY, labelPaint)
         canvas.drawText("секунды", sectionWidth * 2.5f, labelY, labelPaint)
-    }
-
-    private fun drawBackground(canvas: Canvas) {
-        // Semi-transparent background for better readability
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            color = Color.parseColor("#33FFFFFF")
-            style = Paint.Style.FILL
-        }
-
-        val rect = RectF(
-            width * 0.05f,
-            height * 0.3f,
-            width * 0.95f,
-            height * 0.7f
-        )
-        canvas.drawRoundRect(rect, 32f, 32f, paint)
-
-        // Border
-        paint.apply {
-            color = Color.parseColor("#66FFFFFF")
-            style = Paint.Style.STROKE
-            strokeWidth = 3f
-        }
-        canvas.drawRoundRect(rect, 32f, 32f, paint)
     }
 
     private fun updateTime() {
