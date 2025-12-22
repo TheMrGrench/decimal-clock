@@ -37,12 +37,12 @@ class DigitalClockView @JvmOverloads constructor(
     }
 
     private fun setupPaints() {
-        // Digit paint - bright white with strong shadow
+        // Digit paint - bright white with subtle shadow
         digitPaint.apply {
             color = Color.WHITE
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
-            setShadowLayer(16f, 0f, 4f, Color.parseColor("#80000000"))
+            setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
         }
 
         // Label paint - white subtle
@@ -57,7 +57,7 @@ class DigitalClockView @JvmOverloads constructor(
         cardPaint.apply {
             color = Color.parseColor("#50000000")
             style = Paint.Style.FILL
-            setShadowLayer(20f, 0f, 8f, Color.parseColor("#90000000"))
+            setShadowLayer(8f, 0f, 3f, Color.parseColor("#60000000"))
         }
 
         setLayerType(LAYER_TYPE_SOFTWARE, cardPaint)

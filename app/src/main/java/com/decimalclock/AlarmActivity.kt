@@ -42,19 +42,21 @@ class AlarmActivity : AppCompatActivity() {
     }
 
     private fun setupTimeInput() {
-        // TimePicker для выбора времени
-        binding.alarmTimePicker.setIs24HourView(true)
+        // NumberPicker для десятичного времени
+        binding.hoursPicker.minValue = 0
+        binding.hoursPicker.maxValue = 9
+        binding.hoursPicker.value = 0
+
+        binding.minutesPicker.minValue = 0
+        binding.minutesPicker.maxValue = 99
+        binding.minutesPicker.value = 0
+        binding.minutesPicker.setFormatter { String.format("%02d", it) }
     }
 
     private fun setupButtons() {
         binding.setAlarmButton.setOnClickListener {
-            val hours = binding.alarmTimePicker.hour
-            val minutes = binding.alarmTimePicker.minute
-
-            // Конвертируем в десятичное время
-            val totalMinutes = hours * 60 + minutes
-            val decimalHours = (totalMinutes * 10.0 / 1440.0).toInt()
-            val decimalMinutes = ((totalMinutes * 10.0 / 1440.0 - decimalHours) * 100).toInt()
+            val decimalHours = binding.hoursPicker.value
+            val decimalMinutes = binding.minutesPicker.value
 
             setAlarm(decimalHours, decimalMinutes)
         }
@@ -156,14 +158,8 @@ class AlarmActivity : AppCompatActivity() {
             val decimalMinutes = prefs.getInt("alarmDecimalMinutes", 0)
             val alarmTime = prefs.getLong("alarmTimeMillis", 0)
 
-            // Конвертируем десятичное время обратно в обычное
-            val decimalTime = decimalHours * 10000 + decimalMinutes * 100
-            val totalMinutes = (decimalTime / 10.0 * 1440.0 / 10000.0).toInt()
-            val standardHours = totalMinutes / 60
-            val standardMinutes = totalMinutes % 60
-
-            binding.alarmTimePicker.hour = standardHours
-            binding.alarmTimePicker.minute = standardMinutes
+            binding.hoursPicker.value = decimalHours
+            binding.minutesPicker.value = decimalMinutes
             binding.cancelAlarmButton.isEnabled = true
 
             if (alarmTime > System.currentTimeMillis()) {
