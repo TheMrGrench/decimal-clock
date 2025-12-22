@@ -93,7 +93,7 @@ class DigitalClockView @JvmOverloads constructor(
             cardWidth,
             cardHeight,
             decimalHours.toString(),
-            "ч"
+            "грч"
         )
 
         // Draw minute card
@@ -104,7 +104,7 @@ class DigitalClockView @JvmOverloads constructor(
             cardWidth,
             cardHeight,
             String.format("%02d", decimalMinutes),
-            "мин"
+            "грм"
         )
 
         // Draw second card
@@ -115,7 +115,7 @@ class DigitalClockView @JvmOverloads constructor(
             cardWidth,
             cardHeight,
             String.format("%02d", decimalSeconds),
-            "сек"
+            "грс"
         )
     }
 
