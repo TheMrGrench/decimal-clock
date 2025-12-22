@@ -54,12 +54,6 @@ class MainActivity : AppCompatActivity() {
         val colors = SettingsActivity.generateGradientColors(currentHue)
         updateBackgroundGradient(colors.first, colors.second)
 
-        // Применяем пастельный цвет к кнопкам
-        val pastelColor = SettingsActivity.generatePastelColor(currentHue)
-        binding.fabAlarm.backgroundTintList = android.content.res.ColorStateList.valueOf(pastelColor)
-        binding.fabTimer.backgroundTintList = android.content.res.ColorStateList.valueOf(pastelColor)
-        binding.fabSettings.backgroundTintList = android.content.res.ColorStateList.valueOf(pastelColor)
-
         // Загружаем видимость времени
         timeVisible = prefs.getBoolean("timeVisible", true)
         binding.standardTimeView.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
