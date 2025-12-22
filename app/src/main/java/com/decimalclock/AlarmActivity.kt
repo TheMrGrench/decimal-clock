@@ -5,6 +5,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.decimalclock.databinding.ActivityAlarmBinding
@@ -22,18 +24,53 @@ class AlarmActivity : AppCompatActivity() {
 
         overridePendingTransition(R.anim.slide_in_up, android.R.anim.fade_out)
 
+        setupTimeInput()
         setupButtons()
         setupCloseButton()
         loadSavedAlarm()
     }
 
+    private fun setupTimeInput() {
+        binding.alarmTimeInput.addTextChangedListener(object : TextWatcher {
+            private var isFormatting = false
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isFormatting) return
+                isFormatting = true
+
+                val text = s.toString().replace(":", "")
+                if (text.isNotEmpty()) {
+                    val formatted = when {
+                        text.length == 1 -> "$text:"
+                        text.length >= 2 -> "${text[0]}:${text.substring(1, minOf(text.length, 3))}"
+                        else -> text
+                    }
+                    if (formatted != s.toString()) {
+                        s?.replace(0, s.length, formatted)
+                    }
+                }
+
+                isFormatting = false
+            }
+        })
+    }
+
     private fun setupButtons() {
         binding.setAlarmButton.setOnClickListener {
-            val hours = binding.alarmHours.text.toString().toIntOrNull()
-            val minutes = binding.alarmMinutes.text.toString().toIntOrNull()
+            val text = binding.alarmTimeInput.text.toString()
+            val parts = text.split(":")
 
-            if (hours != null && minutes != null && hours in 0..9 && minutes in 0..99) {
-                setAlarm(hours, minutes)
+            if (parts.size == 2) {
+                val hours = parts[0].toIntOrNull()
+                val minutes = parts[1].toIntOrNull() ?: 0
+
+                if (hours != null && hours in 0..9 && minutes in 0..99) {
+                    setAlarm(hours, minutes)
+                }
             }
         }
 
@@ -134,8 +171,7 @@ class AlarmActivity : AppCompatActivity() {
             val minutes = prefs.getInt("alarmDecimalMinutes", 0)
             val alarmTime = prefs.getLong("alarmTimeMillis", 0)
 
-            binding.alarmHours.setText(hours.toString())
-            binding.alarmMinutes.setText(String.format("%02d", minutes))
+            binding.alarmTimeInput.setText(String.format("%d:%02d", hours, minutes))
             binding.cancelAlarmButton.isEnabled = true
 
             if (alarmTime > System.currentTimeMillis()) {

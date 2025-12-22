@@ -14,9 +14,9 @@ class DigitalClockView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
-    private val timePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val digitPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val labelPaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private val separatorPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val cardPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -37,31 +37,27 @@ class DigitalClockView @JvmOverloads constructor(
     }
 
     private fun setupPaints() {
-        // Time digits paint - clean and bold
-        timePaint.apply {
+        // Digit paint - large and bold
+        digitPaint.apply {
             color = Color.WHITE
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-            setShadowLayer(16f, 0f, 0f, Color.parseColor("#50000000"))
         }
 
-        // Label paint - subtle
+        // Label paint - small and subtle
         labelPaint.apply {
-            color = Color.parseColor("#B3FFFFFF")
-            textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
-            setShadowLayer(4f, 0f, 0f, Color.parseColor("#50000000"))
-        }
-
-        // Separator paint
-        separatorPaint.apply {
             color = Color.parseColor("#CCFFFFFF")
             textAlign = Paint.Align.CENTER
-            typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
-            setShadowLayer(8f, 0f, 0f, Color.parseColor("#50000000"))
+            typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
         }
 
-        setLayerType(LAYER_TYPE_SOFTWARE, timePaint)
+        // Card background paint
+        cardPaint.apply {
+            color = Color.parseColor("#30FFFFFF")
+            style = Paint.Style.FILL
+        }
+
+        setLayerType(LAYER_TYPE_SOFTWARE, cardPaint)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -69,32 +65,78 @@ class DigitalClockView @JvmOverloads constructor(
 
         // Scale text sizes based on view size
         val baseSize = minOf(w, h)
-        timePaint.textSize = baseSize * 0.25f
-        separatorPaint.textSize = baseSize * 0.20f
-        labelPaint.textSize = baseSize * 0.06f
+        digitPaint.textSize = baseSize * 0.18f
+        labelPaint.textSize = baseSize * 0.045f
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val centerX = width / 2f
         val centerY = height / 2f
+        val cardWidth = width * 0.25f
+        val cardHeight = height * 0.35f
+        val cardSpacing = width * 0.05f
 
-        // Format time
-        val timeStr = String.format("%d:%02d:%02d", decimalHours, decimalMinutes, decimalSeconds)
+        // Calculate positions for 3 cards
+        val totalWidth = cardWidth * 3 + cardSpacing * 2
+        val startX = (width - totalWidth) / 2f
 
-        // Draw time - clean, no background
-        val textBounds = Rect()
-        timePaint.getTextBounds(timeStr, 0, timeStr.length, textBounds)
-        canvas.drawText(timeStr, centerX, centerY - textBounds.exactCenterY(), timePaint)
+        // Draw hour card
+        drawTimeCard(
+            canvas,
+            startX,
+            centerY - cardHeight / 2f,
+            cardWidth,
+            cardHeight,
+            decimalHours.toString(),
+            "ч"
+        )
 
-        // Draw subtle labels below
-        val labelY = centerY + timePaint.textSize * 0.5f
-        val sectionWidth = width / 3f
+        // Draw minute card
+        drawTimeCard(
+            canvas,
+            startX + cardWidth + cardSpacing,
+            centerY - cardHeight / 2f,
+            cardWidth,
+            cardHeight,
+            String.format("%02d", decimalMinutes),
+            "мин"
+        )
 
-        canvas.drawText("часы", sectionWidth * 0.5f, labelY, labelPaint)
-        canvas.drawText("минуты", sectionWidth * 1.5f, labelY, labelPaint)
-        canvas.drawText("секунды", sectionWidth * 2.5f, labelY, labelPaint)
+        // Draw second card
+        drawTimeCard(
+            canvas,
+            startX + (cardWidth + cardSpacing) * 2,
+            centerY - cardHeight / 2f,
+            cardWidth,
+            cardHeight,
+            String.format("%02d", decimalSeconds),
+            "сек"
+        )
+    }
+
+    private fun drawTimeCard(
+        canvas: Canvas,
+        x: Float,
+        y: Float,
+        width: Float,
+        height: Float,
+        digit: String,
+        label: String
+    ) {
+        val rect = RectF(x, y, x + width, y + height)
+        val cornerRadius = 16f
+
+        // Draw card background
+        canvas.drawRoundRect(rect, cornerRadius, cornerRadius, cardPaint)
+
+        // Draw digit
+        val digitY = y + height * 0.45f
+        canvas.drawText(digit, x + width / 2f, digitY, digitPaint)
+
+        // Draw label
+        val labelY = y + height * 0.75f
+        canvas.drawText(label, x + width / 2f, labelY, labelPaint)
     }
 
     private fun updateTime() {

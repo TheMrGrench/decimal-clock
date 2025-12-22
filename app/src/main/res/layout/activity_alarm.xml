@@ -47,53 +47,37 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Установить время (десятичное):"
-                    android:textSize="16sp"
-                    android:textColor="@color/white_90"
-                    android:layout_marginBottom="12dp" />
+                    android:text="Время будильника:"
+                    android:textSize="18sp"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="16dp"
+                    android:layout_gravity="center" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <EditText
+                    android:id="@+id/alarmTimeInput"
+                    android:layout_width="200dp"
+                    android:layout_height="80dp"
+                    android:hint="0:00"
+                    android:inputType="number"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white_50"
+                    android:backgroundTint="@android:color/transparent"
+                    android:textAlignment="center"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:maxLength="4"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginBottom="24dp">
-
-                    <EditText
-                        android:id="@+id/alarmHours"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:hint="часы"
-                        android:inputType="number"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white_50"
-                        android:backgroundTint="@color/white_50"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        android:maxLength="1" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=":"
-                        android:textSize="32sp"
-                        android:textColor="@color/white"
-                        android:layout_marginHorizontal="12dp" />
-
-                    <EditText
-                        android:id="@+id/alarmMinutes"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:hint="минуты"
-                        android:inputType="number"
-                        android:textColor="@color/white"
-                        android:textColorHint="@color/white_50"
-                        android:backgroundTint="@color/white_50"
-                        android:textAlignment="center"
-                        android:textSize="24sp"
-                        android:maxLength="2" />
-
-                </LinearLayout>
+                    android:text="(десятичное время: 0-9:00-99)"
+                    android:textSize="12sp"
+                    android:textColor="@color/white_70"
+                    android:layout_marginBottom="24dp"
+                    android:layout_gravity="center" />
 
                 <!-- Разделитель -->
                 <View
