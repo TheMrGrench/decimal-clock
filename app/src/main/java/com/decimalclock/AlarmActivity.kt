@@ -5,8 +5,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.decimalclock.databinding.ActivityAlarmBinding
@@ -31,54 +29,8 @@ class AlarmActivity : AppCompatActivity() {
     }
 
     private fun setupTimeInput() {
-        binding.alarmTimeInput.addTextChangedListener(object : TextWatcher {
-            private var isUpdating = false
-            private var cursorPosition = 0
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (!isUpdating) {
-                    cursorPosition = start + count
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (isUpdating || s == null) return
-
-                isUpdating = true
-
-                val input = s.toString().replace(":", "").filter { it.isDigit() }
-
-                val formatted = when {
-                    input.isEmpty() -> ""
-                    input.length == 1 -> "$input:"
-                    input.length == 2 -> "${input[0]}:${input[1]}"
-                    input.length >= 3 -> "${input[0]}:${input.substring(1, minOf(3, input.length))}"
-                    else -> input
-                }
-
-                if (formatted != s.toString()) {
-                    s.replace(0, s.length, formatted)
-
-                    // Set cursor position
-                    val newCursorPos = when {
-                        formatted.isEmpty() -> 0
-                        cursorPosition <= 1 -> minOf(cursorPosition, formatted.length)
-                        cursorPosition == 2 && formatted.length >= 2 -> 2
-                        else -> formatted.length
-                    }
-
-                    try {
-                        binding.alarmTimeInput.setSelection(minOf(newCursorPos, formatted.length))
-                    } catch (e: Exception) {
-                        // Ignore cursor positioning errors
-                    }
-                }
-
-                isUpdating = false
-            }
-        })
+        // Простой ввод без автоформатирования
+        binding.alarmTimeInput.hint = "0:00"
     }
 
     private fun setupButtons() {

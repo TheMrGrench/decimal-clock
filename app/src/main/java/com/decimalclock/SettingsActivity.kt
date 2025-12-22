@@ -112,8 +112,8 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         fun generatePastelColor(hue: Float): Int {
-            // Pastel: low saturation (0.35), high value (0.85)
-            return Color.HSVToColor(128, floatArrayOf(hue, 0.35f, 0.85f))
+            // Pastel: low saturation, high brightness, more opacity
+            return Color.HSVToColor(200, floatArrayOf(hue, 0.45f, 0.95f))
         }
     }
 }

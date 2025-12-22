@@ -40,25 +40,23 @@ class DigitalClockView @JvmOverloads constructor(
         // Digit paint - large and bold, fully white
         digitPaint.apply {
             color = Color.WHITE
-            alpha = 255
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
-            setShadowLayer(8f, 0f, 2f, Color.parseColor("#40000000"))
+            setShadowLayer(12f, 0f, 4f, Color.parseColor("#60000000"))
         }
 
         // Label paint - small and subtle
         labelPaint.apply {
             color = Color.WHITE
-            alpha = 204
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create("sans-serif", Typeface.NORMAL)
         }
 
-        // Card background paint - brighter
+        // Card background paint - яркий и видимый
         cardPaint.apply {
-            color = Color.parseColor("#A0FFFFFF")
+            color = Color.parseColor("#E5FFFFFF")
             style = Paint.Style.FILL
-            setShadowLayer(12f, 0f, 4f, Color.parseColor("#40000000"))
+            setShadowLayer(16f, 0f, 6f, Color.parseColor("#80000000"))
         }
 
         setLayerType(LAYER_TYPE_SOFTWARE, cardPaint)
