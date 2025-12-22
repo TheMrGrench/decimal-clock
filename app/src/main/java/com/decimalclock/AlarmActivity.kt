@@ -29,23 +29,21 @@ class AlarmActivity : AppCompatActivity() {
     }
 
     private fun setupTimeInput() {
-        // Простой ввод без автоформатирования
-        binding.alarmTimeInput.hint = "0:00"
+        // TimePicker для выбора времени
+        binding.alarmTimePicker.setIs24HourView(true)
     }
 
     private fun setupButtons() {
         binding.setAlarmButton.setOnClickListener {
-            val text = binding.alarmTimeInput.text.toString()
-            val parts = text.split(":")
+            val hours = binding.alarmTimePicker.hour
+            val minutes = binding.alarmTimePicker.minute
 
-            if (parts.size == 2) {
-                val hours = parts[0].toIntOrNull()
-                val minutes = parts[1].toIntOrNull() ?: 0
+            // Конвертируем в десятичное время
+            val totalMinutes = hours * 60 + minutes
+            val decimalHours = (totalMinutes * 10.0 / 1440.0).toInt()
+            val decimalMinutes = ((totalMinutes * 10.0 / 1440.0 - decimalHours) * 100).toInt()
 
-                if (hours != null && hours in 0..9 && minutes in 0..99) {
-                    setAlarm(hours, minutes)
-                }
-            }
+            setAlarm(decimalHours, decimalMinutes)
         }
 
         binding.cancelAlarmButton.setOnClickListener {
@@ -141,11 +139,18 @@ class AlarmActivity : AppCompatActivity() {
         isAlarmSet = prefs.getBoolean("alarmSet", false)
 
         if (isAlarmSet) {
-            val hours = prefs.getInt("alarmDecimalHours", 0)
-            val minutes = prefs.getInt("alarmDecimalMinutes", 0)
+            val decimalHours = prefs.getInt("alarmDecimalHours", 0)
+            val decimalMinutes = prefs.getInt("alarmDecimalMinutes", 0)
             val alarmTime = prefs.getLong("alarmTimeMillis", 0)
 
-            binding.alarmTimeInput.setText(String.format("%d:%02d", hours, minutes))
+            // Конвертируем десятичное время обратно в обычное
+            val decimalTime = decimalHours * 10000 + decimalMinutes * 100
+            val totalMinutes = (decimalTime / 10.0 * 1440.0 / 10000.0).toInt()
+            val standardHours = totalMinutes / 60
+            val standardMinutes = totalMinutes % 60
+
+            binding.alarmTimePicker.hour = standardHours
+            binding.alarmTimePicker.minute = standardMinutes
             binding.cancelAlarmButton.isEnabled = true
 
             if (alarmTime > System.currentTimeMillis()) {

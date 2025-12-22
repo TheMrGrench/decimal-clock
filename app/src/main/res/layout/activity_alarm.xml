@@ -44,31 +44,14 @@
                     android:layout_gravity="center" />
 
                 <!-- Выбор времени -->
-                <TextView
+                <TimePicker
+                    android:id="@+id/alarmTimePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Время будильника:"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="16dp"
-                    android:layout_gravity="center" />
-
-                <EditText
-                    android:id="@+id/alarmTimeInput"
-                    android:layout_width="200dp"
-                    android:layout_height="80dp"
-                    android:hint="0:00"
-                    android:inputType="number"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white_50"
-                    android:backgroundTint="@android:color/transparent"
-                    android:textAlignment="center"
-                    android:textSize="48sp"
-                    android:textStyle="bold"
-                    android:maxLength="4"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="24dp" />
+                    android:layout_marginBottom="24dp"
+                    android:timePickerMode="spinner"
+                    android:theme="@style/TimePickerTheme" />
 
                 <!-- Разделитель -->
                 <View
