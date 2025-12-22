@@ -54,37 +54,39 @@ class DecimalClockView @JvmOverloads constructor(
     private fun setupPaints() {
         // Dial paint (glassmorphism background)
         dialPaint.apply {
-            color = Color.parseColor("#1AFFFFFF") // white_10
+            color = Color.parseColor("#33FFFFFF") // white_20 - more visible
             style = Paint.Style.FILL
         }
 
-        // Number paint
+        // Number paint with shadow for better readability
         numberPaint.apply {
-            color = Color.parseColor("#E6FFFFFF") // white_90
+            color = Color.WHITE
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+            setShadowLayer(8f, 0f, 0f, Color.parseColor("#80000000"))
         }
 
         // Mark paint
         markPaint.apply {
-            color = Color.parseColor("#66FFFFFF") // white_40
+            color = Color.parseColor("#B3FFFFFF") // white_70 - more visible
             style = Paint.Style.FILL
         }
 
-        // Hand paint
+        // Hand paint with shadow
         handPaint.apply {
-            color = Color.parseColor("#E6FFFFFF") // white_90
-            style = Paint.Style.FILL
+            color = Color.WHITE
+            style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
+            setShadowLayer(6f, 0f, 2f, Color.parseColor("#80000000"))
         }
 
         // Center dot paint
         centerDotPaint.apply {
-            color = Color.parseColor("#F2FFFFFF") // white_95
+            color = Color.WHITE
             style = Paint.Style.FILL
-            setShadowLayer(10f, 0f, 2f, Color.parseColor("#4D000000"))
+            setShadowLayer(12f, 0f, 2f, Color.parseColor("#80000000"))
         }
-        setLayerType(LAYER_TYPE_SOFTWARE, centerDotPaint)
+        setLayerType(LAYER_TYPE_SOFTWARE, numberPaint)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -192,13 +194,13 @@ class DecimalClockView @JvmOverloads constructor(
 
     private fun drawHands(canvas: Canvas) {
         // Hour hand (thickest, shortest)
-        drawHand(canvas, hourAngle, radius * 0.28f, 6f)
+        drawHand(canvas, hourAngle, radius * 0.28f, 10f)
 
         // Minute hand (medium)
-        drawHand(canvas, minuteAngle, radius * 0.38f, 4f)
+        drawHand(canvas, minuteAngle, radius * 0.38f, 7f)
 
         // Second hand (thinnest, longest)
-        drawHand(canvas, secondAngle, radius * 0.42f, 2f)
+        drawHand(canvas, secondAngle, radius * 0.42f, 4f)
     }
 
     private fun drawHand(canvas: Canvas, angle: Float, length: Float, width: Float) {
@@ -261,11 +263,7 @@ class DecimalClockView @JvmOverloads constructor(
     }
 
     private fun updateColorsFromHue() {
-        // Generate accent color from hue for hands and numbers
-        val accentColor = Color.HSVToColor(floatArrayOf(currentHue, 0.3f, 1.0f))
-
-        handPaint.color = accentColor
-        numberPaint.color = accentColor
-        centerDotPaint.color = accentColor
+        // Keep white color for maximum readability
+        // The shadow provides contrast on any background
     }
 }

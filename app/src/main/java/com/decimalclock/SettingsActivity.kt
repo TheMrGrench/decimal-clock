@@ -23,6 +23,7 @@ class SettingsActivity : AppCompatActivity() {
         loadSettings()
         setupColorHueSeekBar()
         setupTimeVisibilitySwitch()
+        setupClockTypeSwitch()
         setupCloseButton()
     }
 
@@ -70,6 +71,17 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.timeVisibilitySwitch.setOnCheckedChangeListener { _, isChecked ->
             prefs.edit().putBoolean("timeVisible", isChecked).apply()
+        }
+    }
+
+    private fun setupClockTypeSwitch() {
+        val prefs = getSharedPreferences("DecimalClockPrefs", MODE_PRIVATE)
+        val isDigital = prefs.getBoolean("clockTypeDigital", false)
+
+        binding.clockTypeSwitch.isChecked = isDigital
+
+        binding.clockTypeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            prefs.edit().putBoolean("clockTypeDigital", isChecked).apply()
         }
     }
 

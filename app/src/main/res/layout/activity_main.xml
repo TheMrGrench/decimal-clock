@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/rootLayout">
 
+    <!-- Analog Clock View -->
     <com.decimalclock.DecimalClockView
         android:id="@+id/clockView"
         android:layout_width="0dp"
@@ -16,7 +17,22 @@
         app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_chainStyle="packed"
+        android:visibility="visible" />
+
+    <!-- Digital Clock View -->
+    <com.decimalclock.DigitalClockView
+        android:id="@+id/digitalClockView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonsLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:visibility="gone" />
 
     <!-- Alarm and Timer buttons -->
     <LinearLayout

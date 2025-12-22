@@ -80,8 +80,17 @@ class MainActivity : AppCompatActivity() {
         timeVisible = prefs.getBoolean("timeVisible", true)
         binding.standardTime.visibility = if (timeVisible) View.VISIBLE else View.INVISIBLE
 
-        // Обновляем цвет циферблата
-        binding.clockView.setHue(currentHue)
+        // Загружаем тип часов (аналоговый/цифровой)
+        val isDigital = prefs.getBoolean("clockTypeDigital", false)
+        if (isDigital) {
+            binding.clockView.visibility = View.GONE
+            binding.digitalClockView.visibility = View.VISIBLE
+            binding.digitalClockView.setHue(currentHue)
+        } else {
+            binding.clockView.visibility = View.VISIBLE
+            binding.digitalClockView.visibility = View.GONE
+            binding.clockView.setHue(currentHue)
+        }
     }
 
     private fun updateBackgroundGradient(startColor: Int, endColor: Int) {

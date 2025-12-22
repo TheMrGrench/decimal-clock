@@ -111,6 +111,39 @@
 
             </LinearLayout>
 
+            <!-- Разделитель -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_30"
+                android:layout_marginVertical="16dp" />
+
+            <!-- Вид часов -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="24dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Вид часов"
+                    android:textSize="16sp"
+                    android:textColor="@color/white_90" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/clockTypeSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="Цифровой"
+                    android:textColor="@color/white_70" />
+
+            </LinearLayout>
+
             <!-- Кнопка закрыть -->
             <Button
                 android:id="@+id/closeButton"
