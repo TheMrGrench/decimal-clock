@@ -158,10 +158,8 @@ class DecimalClockView @JvmOverloads constructor(
                 val angle = Math.toRadians((i * 3.6 - 90).toDouble())
 
                 val markHeight = if (isMajor) radius * 0.08f else radius * 0.05f
-                val markWidth = if (isMajor) 4f else 2f
-                val markColor = if (isMajor) Color.parseColor("#B3FFFFFF") else Color.parseColor("#4DFFFFFF")
+                val markWidth = if (isMajor) 6f else 3f // Толще линии
 
-                markPaint.color = markColor
                 markPaint.strokeWidth = markWidth
 
                 val startRadius = radius * 0.95f - markHeight
@@ -179,13 +177,13 @@ class DecimalClockView @JvmOverloads constructor(
 
     private fun drawHands(canvas: Canvas) {
         // Hour hand (thickest, shortest)
-        drawHand(canvas, hourAngle, radius * 0.28f, 10f)
+        drawHand(canvas, hourAngle, radius * 0.28f, 12f)
 
         // Minute hand (medium)
-        drawHand(canvas, minuteAngle, radius * 0.38f, 7f)
+        drawHand(canvas, minuteAngle, radius * 0.38f, 9f)
 
         // Second hand (thinnest, longest)
-        drawHand(canvas, secondAngle, radius * 0.42f, 4f)
+        drawHand(canvas, secondAngle, radius * 0.42f, 6f)
     }
 
     private fun drawHand(canvas: Canvas, angle: Float, length: Float, width: Float) {
