@@ -67,10 +67,10 @@ class DecimalClockView @JvmOverloads constructor(
             setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
         }
 
-        // Mark paint - менее контрастный
+        // Mark paint - как цифры на карточках
         markPaint.apply {
             color = Color.WHITE
-            alpha = 180
+            alpha = 230
             style = Paint.Style.FILL
         }
 
@@ -176,14 +176,14 @@ class DecimalClockView @JvmOverloads constructor(
     }
 
     private fun drawHands(canvas: Canvas) {
-        // Hour hand (thickest, shortest)
-        drawHand(canvas, hourAngle, radius * 0.28f, 12f)
+        // Hour hand (thickest, shortest) - длиннее на 40%
+        drawHand(canvas, hourAngle, radius * 0.392f, 12f)
 
-        // Minute hand (medium)
-        drawHand(canvas, minuteAngle, radius * 0.38f, 9f)
+        // Minute hand (medium) - длиннее на 40%
+        drawHand(canvas, minuteAngle, radius * 0.532f, 9f)
 
-        // Second hand (thinnest, longest)
-        drawHand(canvas, secondAngle, radius * 0.42f, 6f)
+        // Second hand (thinnest, longest) - длиннее на 40%
+        drawHand(canvas, secondAngle, radius * 0.588f, 6f)
     }
 
     private fun drawHand(canvas: Canvas, angle: Float, length: Float, width: Float) {
