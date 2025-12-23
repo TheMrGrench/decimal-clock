@@ -58,10 +58,10 @@ class DecimalClockView @JvmOverloads constructor(
             style = Paint.Style.FILL
         }
 
-        // Number paint - как на цифровом табло
+        // Number paint - точно как digitPaint на карточках
         numberPaint.apply {
             color = Color.WHITE
-            alpha = 230 // Немного менее контрастный
+            alpha = 200 // Как на карточках - более полупрозрачный
             textAlign = Paint.Align.CENTER
             typeface = Typeface.create("sans-serif-medium", Typeface.BOLD)
             setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
@@ -70,15 +70,15 @@ class DecimalClockView @JvmOverloads constructor(
         // Mark paint - как цифры на карточках
         markPaint.apply {
             color = Color.WHITE
-            alpha = 230
+            alpha = 200 // Как на карточках
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
         }
 
-        // Hand paint - менее контрастный
+        // Hand paint - как цифры на карточках
         handPaint.apply {
             color = Color.WHITE
-            alpha = 230
+            alpha = 200 // Как на карточках
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
             setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
@@ -87,7 +87,7 @@ class DecimalClockView @JvmOverloads constructor(
         // Center dot paint
         centerDotPaint.apply {
             color = Color.WHITE
-            alpha = 230
+            alpha = 200 // Как на карточках
             style = Paint.Style.FILL
             setShadowLayer(4f, 0f, 2f, Color.parseColor("#40000000"))
         }
