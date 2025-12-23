@@ -71,7 +71,8 @@ class DecimalClockView @JvmOverloads constructor(
         markPaint.apply {
             color = Color.WHITE
             alpha = 230
-            style = Paint.Style.FILL
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
         }
 
         // Hand paint - менее контрастный
@@ -158,7 +159,7 @@ class DecimalClockView @JvmOverloads constructor(
                 val angle = Math.toRadians((i * 3.6 - 90).toDouble())
 
                 val markHeight = if (isMajor) radius * 0.08f else radius * 0.05f
-                val markWidth = if (isMajor) 6f else 3f // Толще линии
+                val markWidth = if (isMajor) 10f else 5f // Толще, как BOLD шрифт
 
                 markPaint.strokeWidth = markWidth
 
@@ -176,14 +177,14 @@ class DecimalClockView @JvmOverloads constructor(
     }
 
     private fun drawHands(canvas: Canvas) {
-        // Hour hand (thickest, shortest) - длиннее на 40%
-        drawHand(canvas, hourAngle, radius * 0.392f, 12f)
+        // Hour hand (thickest, shortest) - длиннее на 40%, толще как BOLD шрифт
+        drawHand(canvas, hourAngle, radius * 0.392f, 18f)
 
-        // Minute hand (medium) - длиннее на 40%
-        drawHand(canvas, minuteAngle, radius * 0.532f, 9f)
+        // Minute hand (medium) - длиннее на 40%, толще как BOLD шрифт
+        drawHand(canvas, minuteAngle, radius * 0.532f, 14f)
 
-        // Second hand (thinnest, longest) - длиннее на 40%
-        drawHand(canvas, secondAngle, radius * 0.588f, 6f)
+        // Second hand (thinnest, longest) - длиннее на 40%, толще как BOLD шрифт
+        drawHand(canvas, secondAngle, radius * 0.588f, 10f)
     }
 
     private fun drawHand(canvas: Canvas, angle: Float, length: Float, width: Float) {
